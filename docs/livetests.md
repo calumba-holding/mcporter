@@ -20,12 +20,15 @@ MCP_LIVE_TESTS=1 pnpm test:live
 This runs the Vitest suite under `tests/live`, in-band, with longer timeouts.
 
 ## Current coverage
-- **DeepWiki** (both wire protocols):
-  - Streamable HTTP: `https://mcp.deepwiki.com/mcp`
-  - SSE: `https://mcp.deepwiki.com/sse`
-  - Test: calls `read_wiki_structure repoName:facebook/react` and asserts a non-empty result.
+- **DeepWiki**:
+  - Streamable HTTP success path: `https://mcp.deepwiki.com/mcp`
+  - Deprecated SSE endpoint classification: `https://mcp.deepwiki.com/sse`
+  - Tests:
+    - call `read_wiki_structure repoName:facebook/react` and assert a non-empty result over Streamable HTTP
+    - assert the legacy SSE endpoint currently returns a structured HTTP `410` issue envelope
 
 ## Notes
 - Tests are skipped entirely unless `MCP_LIVE_TESTS=1` is set.
 - Ensure network egress is allowed. No secrets are required for the current DeepWiki checks.
+- As of 2026-03-29, DeepWiki's hosted `/sse` endpoint responds with HTTP `410`, so the live suite treats that as a compatibility/error-classification smoke rather than a success-path transport check.
 - Keep assertions minimal to reduce flake; these are availability smokes, not full contract tests.

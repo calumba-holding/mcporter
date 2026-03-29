@@ -3,19 +3,19 @@
 ## [Unreleased]
 
 ### CLI
-- `mcporter config add` now accepts plural `--args` as an alias for repeated stdio arguments, matching common CLI muscle memory. (PR #93, thanks @Jah-yee)
+- Preserve OAuth flow vs post-auth transport failures so invalid OAuth/provider errors surface directly, while real legacy 404/405 transport mismatches still fall back to SSE correctly. (PR #97, thanks @mavam)
+- Ignore static `Authorization` headers once OAuth is active so imported editor configs cannot override fresh OAuth tokens. (PR #123, thanks @ahonn)
+- Keep `mcporter call --output json` parseable by emitting valid JSON even when the command falls back to raw output. (PR #128, thanks @armanddp)
+- Render `resource` content blocks in call output helpers instead of dropping them, including markdown resources and JSON text payloads. (PR #124, thanks @mvanhorn)
+- Preserve full JSON/error payloads when `data` is just one field instead of collapsing the response to `data` alone. (PR #106, thanks @AielloChan)
 - Generated CLIs now parse object-valued flags as JSON and render object placeholders/examples with JSON-shaped help text, so tools like Jira `fields` no longer receive raw strings. (PR #114, thanks @v2nic)
 - Deduplicate concurrent keep-alive daemon restarts per server so repeated fatal errors only force-close the cached daemon transport once before retrying. (PR #125, thanks @zm2231)
-- Keep `mcporter call --output json` parseable by emitting valid JSON even when the command falls back to raw output. (PR #128, thanks @armanddp)
-- Ignore static `Authorization` headers once OAuth is active so imported editor configs cannot override fresh OAuth tokens. (PR #123, thanks @ahonn)
-- Preserve full JSON/error payloads when `data` is just one field instead of collapsing the response to `data` alone. (PR #106, thanks @AielloChan)
-- Render `resource` content blocks in call output helpers instead of dropping them, including markdown resources and JSON text payloads. (PR #124, thanks @mvanhorn)
-- Preserve OAuth flow vs post-auth transport failures so invalid OAuth/provider errors surface directly, while real legacy 404/405 transport mismatches still fall back to SSE correctly. (PR #97, thanks @mavam)
+- `mcporter config add` now accepts plural `--args` as an alias for repeated stdio arguments, matching common CLI muscle memory. (PR #93, thanks @Jah-yee)
 - Preserve default imports when `mcporter config add` writes a config file, instead of forcing `"imports": []`.
 - OAuth: avoid crashing on headless Linux when `xdg-open` is unavailable; clear stale dynamic-port client registrations; close callback server if stale-client persistence reads fail. (PR #72, thanks @mgonto)
 - Added optional `oauthScope`/`oauth_scope` config override as an escape hatch for providers that require explicit scopes.
-- `createCallResult().json()` now collects all parseable JSON entries from MCP content arrays (single item stays backward-compatible), and raw inspect depth now stays readable without unbounded traversal. (PR #91, thanks @Blankdlh)
 - OAuth wait/redirect now share one deferred to eliminate authorization race windows and preserve stable close-path errors, including wait-before-redirect and repeated-redirect flows. (PR #70, thanks @monotykamary)
+- `createCallResult().json()` now collects all parseable JSON entries from MCP content arrays (single item stays backward-compatible), and raw inspect depth now stays readable without unbounded traversal. (PR #91, thanks @Blankdlh)
 - Added `--raw-strings` (numeric coercion off) and `--no-coerce` (all coercion off) for `mcporter call` argument parsing so IDs/codes can stay literal strings. (PR #59, thanks @nobrainer-tech)
 - Added `CallResult.images()` plus opt-in `mcporter call --save-images <dir>` so image content blocks can be persisted without changing existing stdout output contracts. (PR #61, thanks @daniella-11ways)
 - OAuth transport retries now classify HTTP 405 as HTTP (not auth) and OAuth promotion applies to configured HTTP servers too, so post-auth fallback flows no longer drop credentials on 405-only endpoints. (PR #48, thanks @caseyg)
