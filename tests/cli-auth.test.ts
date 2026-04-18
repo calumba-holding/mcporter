@@ -22,7 +22,7 @@ const createRuntimeDouble = () => {
     getDefinition,
     getDefinitions: () => Array.from(definitions.values()),
     listTools,
-  } as unknown as Awaited<ReturnType<typeof import('../src/runtime.js')['createRuntime']>>;
+  } as unknown as Awaited<ReturnType<(typeof import('../src/runtime.js'))['createRuntime']>>;
   return { runtime, listTools };
 };
 
@@ -59,7 +59,7 @@ describe('mcporter auth ad-hoc support', () => {
       registerDefinition,
       listTools,
       getDefinition: () => definition,
-    } as unknown as Awaited<ReturnType<typeof import('../src/runtime.js')['createRuntime']>>;
+    } as unknown as Awaited<ReturnType<(typeof import('../src/runtime.js'))['createRuntime']>>;
 
     await handleAuth(runtime, ['https://mcp.vercel.com']);
 
@@ -78,7 +78,7 @@ describe('mcporter auth ad-hoc support', () => {
       registerDefinition: vi.fn(),
       listTools: vi.fn().mockRejectedValue(new Error('fetch failed: connect ECONNREFUSED 127.0.0.1:9000')),
       getDefinition: () => definition,
-    } as unknown as Awaited<ReturnType<typeof import('../src/runtime.js')['createRuntime']>>;
+    } as unknown as Awaited<ReturnType<(typeof import('../src/runtime.js'))['createRuntime']>>;
     const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
     const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 

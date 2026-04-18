@@ -33,7 +33,7 @@ export interface ListJsonServerEntry {
 }
 
 export function printSingleServerHeader(
-  definition: ReturnType<Awaited<ReturnType<typeof import('../runtime.js')['createRuntime']>>['getDefinition']>,
+  definition: ReturnType<Awaited<ReturnType<(typeof import('../runtime.js'))['createRuntime']>>['getDefinition']>,
   toolCount: number | undefined,
   durationMs: number | undefined,
   transportSummary: string,
@@ -70,7 +70,7 @@ export function printSingleServerHeader(
 }
 
 export function printToolDetail(
-  definition: ReturnType<Awaited<ReturnType<typeof import('../runtime.js')['createRuntime']>>['getDefinition']>,
+  definition: ReturnType<Awaited<ReturnType<(typeof import('../runtime.js'))['createRuntime']>>['getDefinition']>,
   metadata: ToolMetadata,
   includeSchema: boolean,
   requiredOnly: boolean
@@ -107,7 +107,7 @@ export function printToolDetail(
 }
 
 function buildExampleOptions(
-  definition: ReturnType<Awaited<ReturnType<typeof import('../runtime.js')['createRuntime']>>['getDefinition']>
+  definition: ReturnType<Awaited<ReturnType<(typeof import('../runtime.js'))['createRuntime']>>['getDefinition']>
 ): { selector?: string; wrapExpression?: boolean } | undefined {
   if (definition.source?.kind !== 'local' || definition.source.path !== '<adhoc>') {
     return undefined;
@@ -150,7 +150,7 @@ export function buildJsonListEntry(
       description: result.server.description,
       transport: formatTransportSummary(
         result.server as ReturnType<
-          Awaited<ReturnType<typeof import('../runtime.js')['createRuntime']>>['getDefinition']
+          Awaited<ReturnType<(typeof import('../runtime.js'))['createRuntime']>>['getDefinition']
         >
       ),
       source: result.server.source,
@@ -164,7 +164,7 @@ export function buildJsonListEntry(
     };
   }
   const authCommand = buildAuthCommandHint(
-    result.server as ReturnType<Awaited<ReturnType<typeof import('../runtime.js')['createRuntime']>>['getDefinition']>
+    result.server as ReturnType<Awaited<ReturnType<(typeof import('../runtime.js'))['createRuntime']>>['getDefinition']>
   );
   const advice = classifyListError(result.error, result.server.name, timeoutSeconds, { authCommand });
   return {
@@ -173,7 +173,9 @@ export function buildJsonListEntry(
     durationMs: result.durationMs,
     description: result.server.description,
     transport: formatTransportSummary(
-      result.server as ReturnType<Awaited<ReturnType<typeof import('../runtime.js')['createRuntime']>>['getDefinition']>
+      result.server as ReturnType<
+        Awaited<ReturnType<(typeof import('../runtime.js'))['createRuntime']>>['getDefinition']
+      >
     ),
     source: result.server.source,
     sources: options.includeSources ? result.server.sources : undefined,
@@ -193,7 +195,7 @@ export function createUnknownResult(server: ServerDefinition): ListSummaryResult
 }
 
 export function buildAuthCommandHint(
-  definition: ReturnType<Awaited<ReturnType<typeof import('../runtime.js')['createRuntime']>>['getDefinition']>
+  definition: ReturnType<Awaited<ReturnType<(typeof import('../runtime.js'))['createRuntime']>>['getDefinition']>
 ): string {
   if (definition.source?.kind === 'local' && definition.source.path === '<adhoc>') {
     if (definition.command.kind === 'http') {

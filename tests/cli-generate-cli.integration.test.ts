@@ -659,12 +659,12 @@ await new Promise((resolve) => {
     expect(stats.isFile()).toBe(true);
 
     const { stdout } = await new Promise<{ stdout: string; stderr: string }>((resolve, reject) => {
-      execFile(binaryPath, [], { env: process.env }, (error, stdout, stderr) => {
+      execFile(binaryPath, [], { env: process.env }, (error, childStdout, childStderr) => {
         if (error) {
           reject(error);
           return;
         }
-        resolve({ stdout, stderr });
+        resolve({ stdout: childStdout, stderr: childStderr });
       });
     });
     expect(stdout).toContain('echo - Return the provided text');

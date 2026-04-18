@@ -41,7 +41,7 @@ describe('CLI list formatting', () => {
         command: { kind: 'http', url: new URL('https://example.com/mcp') },
       }),
       listTools: listToolsSpy,
-    } as unknown as Awaited<ReturnType<typeof import('../src/runtime.js')['createRuntime']>>;
+    } as unknown as Awaited<ReturnType<(typeof import('../src/runtime.js'))['createRuntime']>>;
 
     const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
 
@@ -94,7 +94,7 @@ describe('CLI list formatting', () => {
         }
         return Promise.reject(new Error('HTTP error 500: upstream unavailable'));
       },
-    } as unknown as Awaited<ReturnType<typeof import('../src/runtime.js')['createRuntime']>>;
+    } as unknown as Awaited<ReturnType<(typeof import('../src/runtime.js'))['createRuntime']>>;
     const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
     await handleList(runtime, ['--json']);
     const payload = JSON.parse(logSpy.mock.calls.at(-1)?.[0] ?? '{}');
@@ -133,7 +133,7 @@ describe('CLI list formatting', () => {
       getDefinitions: () => [definition],
       getDefinition: () => definition,
       registerDefinition: vi.fn(),
-    } as unknown as Awaited<ReturnType<typeof import('../src/runtime.js')['createRuntime']>>;
+    } as unknown as Awaited<ReturnType<(typeof import('../src/runtime.js'))['createRuntime']>>;
 
     const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
 
@@ -156,7 +156,7 @@ describe('CLI list formatting', () => {
     const runtime = {
       getDefinition: () => linearDefinition,
       listTools: listToolsSpy,
-    } as unknown as Awaited<ReturnType<typeof import('../src/runtime.js')['createRuntime']>>;
+    } as unknown as Awaited<ReturnType<(typeof import('../src/runtime.js'))['createRuntime']>>;
 
     const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
 
@@ -183,7 +183,7 @@ describe('CLI list formatting', () => {
     const runtime = {
       getDefinition: () => linearDefinition,
       listTools: listToolsSpy,
-    } as unknown as Awaited<ReturnType<typeof import('../src/runtime.js')['createRuntime']>>;
+    } as unknown as Awaited<ReturnType<(typeof import('../src/runtime.js'))['createRuntime']>>;
 
     const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
 
@@ -224,7 +224,7 @@ describe('CLI list formatting', () => {
     const runtime = {
       getDefinition: () => linearDefinition,
       listTools: listToolsSpy,
-    } as unknown as Awaited<ReturnType<typeof import('../src/runtime.js')['createRuntime']>>;
+    } as unknown as Awaited<ReturnType<(typeof import('../src/runtime.js'))['createRuntime']>>;
 
     const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
 
@@ -247,7 +247,7 @@ describe('CLI list formatting', () => {
     const runtime = {
       getDefinition: () => linearDefinition,
       listTools: listToolsSpy,
-    } as unknown as Awaited<ReturnType<typeof import('../src/runtime.js')['createRuntime']>>;
+    } as unknown as Awaited<ReturnType<(typeof import('../src/runtime.js'))['createRuntime']>>;
 
     const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
 
@@ -306,7 +306,7 @@ describe('CLI list formatting', () => {
     const runtime = {
       getDefinition: () => linearDefinition,
       listTools: listToolsSpy,
-    } as unknown as Awaited<ReturnType<typeof import('../src/runtime.js')['createRuntime']>>;
+    } as unknown as Awaited<ReturnType<(typeof import('../src/runtime.js'))['createRuntime']>>;
 
     const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
     const nowSpy = vi.spyOn(Date, 'now').mockReturnValue(1_700_000_000_000);

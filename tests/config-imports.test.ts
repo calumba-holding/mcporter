@@ -79,7 +79,7 @@ describe('config imports', () => {
     });
     const homeDir = ensureFakeHomeDir();
 
-    const names = servers.map((server) => server.name).sort();
+    const names = servers.map((server) => server.name).toSorted();
     expect(names).toEqual([
       'claude-home',
       'claude-local',

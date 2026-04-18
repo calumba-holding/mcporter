@@ -196,7 +196,7 @@ describe('CLI call execution behavior', () => {
       callTool,
       listTools,
       close: vi.fn().mockResolvedValue(undefined),
-    } as unknown as Awaited<ReturnType<typeof import('../src/runtime.js')['createRuntime']>>;
+    } as unknown as Awaited<ReturnType<(typeof import('../src/runtime.js'))['createRuntime']>>;
 
     const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
 
@@ -220,7 +220,7 @@ describe('CLI call execution behavior', () => {
       callTool,
       listTools,
       close: vi.fn().mockResolvedValue(undefined),
-    } as unknown as Awaited<ReturnType<typeof import('../src/runtime.js')['createRuntime']>>;
+    } as unknown as Awaited<ReturnType<(typeof import('../src/runtime.js'))['createRuntime']>>;
 
     const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
@@ -311,7 +311,7 @@ function createRuntimeStub(
   >,
   options: { definitions?: ServerDefinition[] } = {}
 ): {
-  runtime: Awaited<ReturnType<typeof import('../src/runtime.js')['createRuntime']>>;
+  runtime: Awaited<ReturnType<(typeof import('../src/runtime.js'))['createRuntime']>>;
   callTool: ReturnType<typeof vi.fn>;
   listTools: ReturnType<typeof vi.fn>;
 } {
@@ -343,6 +343,6 @@ function createRuntimeStub(
     listTools,
     callTool,
     close,
-  } as unknown as Awaited<ReturnType<typeof import('../src/runtime.js')['createRuntime']>>;
+  } as unknown as Awaited<ReturnType<(typeof import('../src/runtime.js'))['createRuntime']>>;
   return { runtime, callTool, listTools };
 }

@@ -20,6 +20,26 @@ export interface GeneratedOption {
   formatHint?: string;
 }
 
+function resolveSchemaType(value: unknown): GeneratedOption['type'] | undefined {
+  if (value === 'integer') {
+    return 'number';
+  }
+  if (value === 'string' || value === 'number' || value === 'boolean' || value === 'array' || value === 'object') {
+    return value;
+  }
+  return undefined;
+}
+
+function resolveArrayItemType(value: unknown): GeneratedOption['arrayItemType'] | undefined {
+  if (value === 'integer') {
+    return 'number';
+  }
+  if (value === 'string' || value === 'number' || value === 'boolean') {
+    return value;
+  }
+  return undefined;
+}
+
 export function buildToolMetadata(tool: ServerToolInfo): ToolMetadata {
   const methodName = toProxyMethodName(tool.name);
   const properties = extractOptions(tool);
@@ -230,25 +250,16 @@ export function inferType(descriptor: unknown): GeneratedOption['type'] {
     return 'unknown';
   }
   const type = (descriptor as Record<string, unknown>).type;
-  const resolveType = (value: unknown): GeneratedOption['type'] | undefined => {
-    if (value === 'integer') {
-      return 'number';
-    }
-    if (value === 'string' || value === 'number' || value === 'boolean' || value === 'array' || value === 'object') {
-      return value;
-    }
-    return undefined;
-  };
   if (Array.isArray(type)) {
     for (const entry of type) {
-      const resolved = resolveType(entry);
+      const resolved = resolveSchemaType(entry);
       if (resolved) {
         return resolved;
       }
     }
     return 'unknown';
   }
-  const resolved = resolveType(type);
+  const resolved = resolveSchemaType(type);
   if (resolved) {
     return resolved;
   }
@@ -265,25 +276,16 @@ export function inferArrayItemType(descriptor: unknown): GeneratedOption['arrayI
   }
   const items = record.items as Record<string, unknown>;
   const itemType = items.type;
-  const resolveItemType = (value: unknown): GeneratedOption['arrayItemType'] | undefined => {
-    if (value === 'integer') {
-      return 'number';
-    }
-    if (value === 'string' || value === 'number' || value === 'boolean') {
-      return value;
-    }
-    return undefined;
-  };
   if (Array.isArray(itemType)) {
     for (const entry of itemType) {
-      const resolved = resolveItemType(entry);
+      const resolved = resolveArrayItemType(entry);
       if (resolved) {
         return resolved;
       }
     }
     return 'unknown';
   }
-  const resolved = resolveItemType(itemType);
+  const resolved = resolveArrayItemType(itemType);
   if (resolved) {
     return resolved;
   }

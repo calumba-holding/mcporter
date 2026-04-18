@@ -284,7 +284,7 @@ function handleArgsFlag(context: FlagHandlerContext): number {
   try {
     decoded = JSON.parse(raw);
   } catch (error) {
-    throw new Error(`Unable to parse --args: ${(error as Error).message}`);
+    throw new Error(`Unable to parse --args: ${(error as Error).message}`, { cause: error });
   }
   if (decoded === null || typeof decoded !== 'object' || Array.isArray(decoded)) {
     throw new Error('Unable to parse --args: --args must be a JSON object.');

@@ -73,6 +73,8 @@ if (STDIO_TRACE_ENABLED) {
   console.log('[mcporter] STDIO trace logging enabled (set MCPORTER_STDIO_TRACE=0 to disable).');
 }
 
+function ignoreEmitterError(): void {}
+
 function destroyStream(stream: unknown): void {
   if (!stream || typeof stream !== 'object') {
     return;
@@ -85,9 +87,8 @@ function destroyStream(stream: unknown): void {
     end?: () => void;
     unref?: () => void;
   };
-  const swallowError = () => {};
   try {
-    emitter.on?.('error', swallowError);
+    emitter.on?.('error', ignoreEmitterError);
   } catch {
     // ignore
   }
@@ -107,12 +108,12 @@ function destroyStream(stream: unknown): void {
     // ignore
   }
   try {
-    emitter.off?.('error', swallowError);
+    emitter.off?.('error', ignoreEmitterError);
   } catch {
     // ignore
   }
   try {
-    emitter.removeListener?.('error', swallowError);
+    emitter.removeListener?.('error', ignoreEmitterError);
   } catch {
     // ignore
   }
@@ -130,9 +131,8 @@ function waitForChildClose(child: MaybeChildProcess | undefined, timeoutMs: numb
   }
   return new Promise((resolve) => {
     let settled = false;
-    const swallowProcessError = () => {};
     try {
-      child.on?.('error', swallowProcessError);
+      child.on?.('error', ignoreEmitterError);
     } catch {
       // ignore
     }
@@ -149,7 +149,7 @@ function waitForChildClose(child: MaybeChildProcess | undefined, timeoutMs: numb
       child.removeListener('close', finish);
       child.removeListener('error', finish);
       try {
-        child.removeListener?.('error', swallowProcessError);
+        child.removeListener?.('error', ignoreEmitterError);
       } catch {
         // ignore
       }
@@ -393,9 +393,8 @@ function patchStdioStart(): void {
           meta.stderrChunks.push(chunk.toString('utf8'));
         }
       };
-      const swallowError = () => {};
       (targetStream as NodeJS.EventEmitter).on('data', handleChunk);
-      (targetStream as NodeJS.EventEmitter).on('error', swallowError);
+      (targetStream as NodeJS.EventEmitter).on('error', ignoreEmitterError);
       meta.listeners.push({
         stream: targetStream as NodeJS.EventEmitter & {
           removeListener?: (event: string, listener: (...args: unknown[]) => void) => void;
@@ -408,7 +407,7 @@ function patchStdioStart(): void {
           removeListener?: (event: string, listener: (...args: unknown[]) => void) => void;
         },
         event: 'error',
-        handler: swallowError,
+        handler: ignoreEmitterError,
       });
     }
 
@@ -426,9 +425,8 @@ function patchStdioStart(): void {
           meta.stdoutChunks.push(chunk.toString('utf8'));
         }
       };
-      const swallowStdoutError = () => {};
       stdoutStream.on('data', handleStdout);
-      stdoutStream.on('error', swallowStdoutError);
+      stdoutStream.on('error', ignoreEmitterError);
       meta.listeners.push({
         stream: stdoutStream,
         event: 'data',
@@ -437,7 +435,7 @@ function patchStdioStart(): void {
       meta.listeners.push({
         stream: stdoutStream,
         event: 'error',
-        handler: swallowStdoutError,
+        handler: ignoreEmitterError,
       });
     }
 

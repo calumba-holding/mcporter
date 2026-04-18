@@ -46,7 +46,7 @@ async function bundleWithRolldown({
   runtimeKind: 'node' | 'bun';
   minify: boolean;
 }): Promise<string> {
-  let rolldownImpl: typeof import('rolldown')['rolldown'];
+  let rolldownImpl: (typeof import('rolldown'))['rolldown'];
   try {
     ({ rolldown: rolldownImpl } = await import('rolldown'));
   } catch (error) {
@@ -56,7 +56,7 @@ async function bundleWithRolldown({
       error.message = `${message}\n\n${error.message}`;
       throw error;
     }
-    throw new Error(message);
+    throw new Error(message, { cause: error });
   }
   const absTarget = path.resolve(targetPath);
   await fs.mkdir(path.dirname(absTarget), { recursive: true });

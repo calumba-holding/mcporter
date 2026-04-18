@@ -68,7 +68,7 @@ export function resolveEnvPlaceholders(value: string): string {
   });
 
   if (missing.size > 0) {
-    const names = [...missing].sort().join(', ');
+    const names = [...missing].toSorted().join(', ');
     throw new Error(`Environment variable(s) ${names} must be set for MCP header substitution.`);
   }
 

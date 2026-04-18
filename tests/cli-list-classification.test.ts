@@ -52,7 +52,7 @@ describe('CLI list classification and routing', () => {
             return Promise.resolve([]);
         }
       },
-    } as unknown as Awaited<ReturnType<typeof import('../src/runtime.js')['createRuntime']>>;
+    } as unknown as Awaited<ReturnType<(typeof import('../src/runtime.js'))['createRuntime']>>;
 
     const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
     const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
@@ -99,7 +99,7 @@ describe('CLI list classification and routing', () => {
       }),
       getDefinitions: () => Array.from(definitions.values()),
       listTools: vi.fn().mockRejectedValue(new Error('SSE error: Non-200 status code (401)')),
-    } as unknown as Awaited<ReturnType<typeof import('../src/runtime.js')['createRuntime']>>;
+    } as unknown as Awaited<ReturnType<(typeof import('../src/runtime.js'))['createRuntime']>>;
 
     const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
     const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
@@ -130,7 +130,7 @@ describe('CLI list classification and routing', () => {
       registerDefinition,
       getDefinition: () => definition,
       listTools,
-    } as unknown as Awaited<ReturnType<typeof import('../src/runtime.js')['createRuntime']>>;
+    } as unknown as Awaited<ReturnType<(typeof import('../src/runtime.js'))['createRuntime']>>;
 
     await handleList(runtime, ['https://mcp.vercel.com']);
 
@@ -153,7 +153,7 @@ describe('CLI list classification and routing', () => {
       registerDefinition,
       getDefinition: () => definition,
       listTools,
-    } as unknown as Awaited<ReturnType<typeof import('../src/runtime.js')['createRuntime']>>;
+    } as unknown as Awaited<ReturnType<(typeof import('../src/runtime.js'))['createRuntime']>>;
 
     await handleList(runtime, ['https://www.shadcn.io/api/mcp.getComponents']);
 
@@ -175,7 +175,7 @@ describe('CLI list classification and routing', () => {
       registerDefinition: vi.fn(),
       getDefinition: () => definition,
       listTools,
-    } as unknown as Awaited<ReturnType<typeof import('../src/runtime.js')['createRuntime']>>;
+    } as unknown as Awaited<ReturnType<(typeof import('../src/runtime.js'))['createRuntime']>>;
 
     await handleList(runtime, ['shadcn.io/api/mcp.getComponents']);
 
@@ -195,7 +195,7 @@ describe('CLI list classification and routing', () => {
     const runtime = {
       getDefinitions: () => [definition],
       listTools,
-    } as unknown as Awaited<ReturnType<typeof import('../src/runtime.js')['createRuntime']>>;
+    } as unknown as Awaited<ReturnType<(typeof import('../src/runtime.js'))['createRuntime']>>;
 
     await handleList(runtime, []);
 
@@ -223,7 +223,7 @@ describe('CLI list classification and routing', () => {
       },
       listTools,
       registerDefinition,
-    } as unknown as Awaited<ReturnType<typeof import('../src/runtime.js')['createRuntime']>>;
+    } as unknown as Awaited<ReturnType<(typeof import('../src/runtime.js'))['createRuntime']>>;
 
     const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
 
@@ -250,7 +250,7 @@ describe('CLI list classification and routing', () => {
       getDefinition,
       getDefinitions: () => [definition],
       listTools,
-    } as unknown as Awaited<ReturnType<typeof import('../src/runtime.js')['createRuntime']>>;
+    } as unknown as Awaited<ReturnType<(typeof import('../src/runtime.js'))['createRuntime']>>;
 
     const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
 
@@ -274,7 +274,7 @@ describe('CLI list classification and routing', () => {
       },
       getDefinitions: () => [definition],
       listTools,
-    } as unknown as Awaited<ReturnType<typeof import('../src/runtime.js')['createRuntime']>>;
+    } as unknown as Awaited<ReturnType<(typeof import('../src/runtime.js'))['createRuntime']>>;
 
     const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
     const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {});

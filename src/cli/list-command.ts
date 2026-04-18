@@ -86,7 +86,7 @@ export function extractListFlags(args: string[]): {
 type ListOutputFormat = 'text' | 'json';
 
 export async function handleList(
-  runtime: Awaited<ReturnType<typeof import('../runtime.js')['createRuntime']>>,
+  runtime: Awaited<ReturnType<(typeof import('../runtime.js'))['createRuntime']>>,
   args: string[]
 ): Promise<void> {
   const flags = extractListFlags(args);
@@ -341,7 +341,6 @@ export async function handleList(
     const durationMs = Date.now() - startedAt;
     printSingleServerHeader(definition, undefined, durationMs, transportSummary, sourcePath);
     const message = error instanceof Error ? error.message : 'Failed to load tool list.';
-    const timeoutMs = flags.timeoutMs ?? LIST_TIMEOUT_MS;
     const authCommand = buildAuthCommandHint(definition);
     const advice = classifyListError(error, definition.name, timeoutMs, { authCommand });
     console.warn(`  Tools: <timed out after ${timeoutMs}ms>`);
@@ -390,7 +389,7 @@ export function printListHelp(): void {
 }
 
 function resolveServerDefinition(
-  runtime: Awaited<ReturnType<typeof import('../runtime.js')['createRuntime']>>,
+  runtime: Awaited<ReturnType<(typeof import('../runtime.js'))['createRuntime']>>,
   name: string
 ): { definition: ServerDefinition; name: string } | undefined {
   try {
@@ -423,7 +422,7 @@ function resolveServerDefinition(
 }
 
 function suggestServerName(
-  runtime: Awaited<ReturnType<typeof import('../runtime.js')['createRuntime']>>,
+  runtime: Awaited<ReturnType<(typeof import('../runtime.js'))['createRuntime']>>,
   attempted: string
 ) {
   const definitions = runtime.getDefinitions();

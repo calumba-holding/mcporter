@@ -346,5 +346,5 @@ function normalizeLayers(
 ): Array<{ path: string; mtimeMs: number | null }> {
   return layers
     .map((entry) => ({ path: path.resolve(entry.path), mtimeMs: entry.mtimeMs ?? null }))
-    .sort((a, b) => a.path.localeCompare(b.path));
+    .toSorted((a, b) => a.path.localeCompare(b.path));
 }

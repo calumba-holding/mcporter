@@ -25,7 +25,7 @@ import { dimText, redText, yellowText } from './terminal.js';
 import { resolveCallTimeout, withTimeout } from './timeouts.js';
 import { loadToolMetadata } from './tool-cache.js';
 
-type Runtime = Awaited<ReturnType<typeof import('../runtime.js')['createRuntime']>>;
+type Runtime = Awaited<ReturnType<(typeof import('../runtime.js'))['createRuntime']>>;
 
 interface ResolvedCallTarget {
   server: string;
@@ -199,7 +199,7 @@ export function printCallHelp(): void {
 }
 
 async function maybeDescribeServer(
-  runtime: Awaited<ReturnType<typeof import('../runtime.js')['createRuntime']>>,
+  runtime: Awaited<ReturnType<(typeof import('../runtime.js'))['createRuntime']>>,
   server: string,
   tool: string,
   outputFormat: OutputFormat
@@ -266,7 +266,7 @@ function resolveCallTarget(
 }
 
 async function enforceSchemaStringTypes(
-  runtime: Awaited<ReturnType<typeof import('../runtime.js')['createRuntime']>>,
+  runtime: Awaited<ReturnType<(typeof import('../runtime.js'))['createRuntime']>>,
   server: string,
   tool: string,
   args: Record<string, unknown>,
@@ -325,7 +325,7 @@ function schemaAllowsString(descriptor: unknown): boolean {
 }
 
 async function hydratePositionalArguments(
-  runtime: Awaited<ReturnType<typeof import('../runtime.js')['createRuntime']>>,
+  runtime: Awaited<ReturnType<(typeof import('../runtime.js'))['createRuntime']>>,
   server: string,
   tool: string,
   namedArgs: Record<string, unknown>,
@@ -375,7 +375,7 @@ async function hydratePositionalArguments(
 type ToolResolution = IdentifierResolution;
 
 async function inferSingleToolName(
-  runtime: Awaited<ReturnType<typeof import('../runtime.js')['createRuntime']>>,
+  runtime: Awaited<ReturnType<(typeof import('../runtime.js'))['createRuntime']>>,
   server: string
 ): Promise<string | undefined> {
   const tools = await loadToolMetadata(runtime, server, { includeSchema: false });
@@ -391,7 +391,7 @@ async function inferSingleToolName(
 }
 
 async function invokeWithAutoCorrection(
-  runtime: Awaited<ReturnType<typeof import('../runtime.js')['createRuntime']>>,
+  runtime: Awaited<ReturnType<(typeof import('../runtime.js'))['createRuntime']>>,
   server: string,
   tool: string,
   args: Record<string, unknown>,
@@ -402,7 +402,7 @@ async function invokeWithAutoCorrection(
 }
 
 async function attemptCall(
-  runtime: Awaited<ReturnType<typeof import('../runtime.js')['createRuntime']>>,
+  runtime: Awaited<ReturnType<(typeof import('../runtime.js'))['createRuntime']>>,
   server: string,
   tool: string,
   args: Record<string, unknown>,
@@ -417,7 +417,8 @@ async function attemptCall(
       const timeoutDisplay = `${timeoutMs}ms`;
       await runtime.close(server).catch(() => {});
       throw new Error(
-        `Call to ${server}.${tool} timed out after ${timeoutDisplay}. Override MCPORTER_CALL_TIMEOUT or pass --timeout to adjust.`
+        `Call to ${server}.${tool} timed out after ${timeoutDisplay}. Override MCPORTER_CALL_TIMEOUT or pass --timeout to adjust.`,
+        { cause: error }
       );
     }
 
@@ -451,7 +452,7 @@ async function attemptCall(
 }
 
 async function maybeResolveToolName(
-  runtime: Awaited<ReturnType<typeof import('../runtime.js')['createRuntime']>>,
+  runtime: Awaited<ReturnType<(typeof import('../runtime.js'))['createRuntime']>>,
   server: string,
   attemptedTool: string,
   error: unknown

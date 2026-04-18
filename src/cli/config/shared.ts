@@ -26,8 +26,8 @@ export function cloneConfig(config: RawConfig): RawConfig {
 
 export async function loadOrCreateConfig(loadOptions: LoadConfigOptions): Promise<{ config: RawConfig; path: string }> {
   try {
-    const { config, path } = await loadRawConfig(loadOptions);
-    return { config, path };
+    const { config, path: configPath } = await loadRawConfig(loadOptions);
+    return { config, path: configPath };
   } catch (error) {
     if (isErrno(error, 'ENOENT')) {
       const rootDir = loadOptions.rootDir ?? process.cwd();

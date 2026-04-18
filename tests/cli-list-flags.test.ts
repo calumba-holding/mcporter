@@ -66,7 +66,7 @@ describe('CLI list flag parsing', () => {
         new Promise((resolve) => {
           setTimeout(() => resolve([{ name: 'ok' }]), 50);
         }),
-    } as unknown as Awaited<ReturnType<typeof import('../src/runtime.js')['createRuntime']>>;
+    } as unknown as Awaited<ReturnType<(typeof import('../src/runtime.js'))['createRuntime']>>;
 
     const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
     const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});

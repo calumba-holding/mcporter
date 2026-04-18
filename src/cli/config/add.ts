@@ -202,7 +202,7 @@ function parseTransport(value: string | undefined): 'http' | 'sse' | 'stdio' {
 }
 
 function parseKeyValue(input: string | undefined, target: Record<string, string>, flagName: string): void {
-  if (!input || !input.includes('=')) {
+  if (!input?.includes('=')) {
     throw new CliUsageError(`${flagName} requires KEY=value.`);
   }
   const [key, ...rest] = input.split('=');

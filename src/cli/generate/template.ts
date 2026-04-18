@@ -79,11 +79,12 @@ export function renderTemplate({
       flagExtras: [{ text: '--raw <json>' }],
     }),
   }));
-  const renderedTools = toolDocs.map((entry) => ({
-    ...renderToolCommand(entry.tool, timeoutMs, serverName, entry.doc),
-    doc: entry.doc,
-    tool: entry.tool,
-  }));
+  const renderedTools = toolDocs.map((entry) =>
+    Object.assign(renderToolCommand(entry.tool, timeoutMs, serverName, entry.doc), {
+      doc: entry.doc,
+      tool: entry.tool,
+    })
+  );
   const toolHelp = renderedTools.map((entry) => ({
     name: entry.commandName,
     description: entry.tool.tool.description ?? '',

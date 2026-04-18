@@ -66,7 +66,7 @@ export function extractEphemeralServerFlags(
 
     if (token === '--env') {
       const value = args[index + 1];
-      if (!value || !value.includes('=')) {
+      if (!value?.includes('=')) {
         throw new Error("Flag '--env' requires KEY=value.");
       }
       const [key, ...rest] = value.split('=');

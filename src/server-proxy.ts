@@ -281,11 +281,11 @@ export function createServerProxy(
   }
 
   const base: ServerProxy = {
-    call: async (toolName: string, options?: ToolCallOptions) => {
-      const result = await runtime.callTool(serverName, toolName, options ?? {});
+    call: async (toolName: string, callOptions?: ToolCallOptions) => {
+      const result = await runtime.callTool(serverName, toolName, callOptions ?? {});
       return createCallResult(result);
     },
-    listTools: (options) => runtime.listTools(serverName, options),
+    listTools: (listOptions) => runtime.listTools(serverName, listOptions),
   };
 
   return new Proxy(base as ServerProxy & Record<string | symbol, unknown>, {

@@ -122,7 +122,7 @@ class McpRuntime implements Runtime {
 
   // listServers returns configured names sorted alphabetically for stable CLI output.
   listServers(): string[] {
-    return [...this.definitions.keys()].sort((a, b) => a.localeCompare(b));
+    return [...this.definitions.keys()].toSorted((a, b) => a.localeCompare(b));
   }
 
   // getDefinitions exposes raw server metadata to consumers such as the CLI.

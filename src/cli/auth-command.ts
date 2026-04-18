@@ -80,7 +80,7 @@ export async function handleAuth(runtime: Runtime, args: string[]): Promise<void
         process.exitCode = 1;
         return;
       }
-      throw new Error(`Failed to authorize '${target}': ${message}`);
+      throw new Error(`Failed to authorize '${target}': ${message}`, { cause: error });
     }
   }
 }

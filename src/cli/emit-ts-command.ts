@@ -182,7 +182,7 @@ function getServerDefinition(runtime: Runtime, selector: string): ServerDefiniti
       return runtime.getDefinition(resolved);
     }
     if (error instanceof Error) {
-      throw new Error(error.message);
+      throw new Error(error.message, { cause: error });
     }
     throw error;
   }

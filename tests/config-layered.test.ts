@@ -95,7 +95,7 @@ describe('loadServerDefinitions with layered configs', () => {
     );
 
     const servers = await loadServerDefinitions({ rootDir: projectDir });
-    const names = servers.map((server) => server.name).sort();
+    const names = servers.map((server) => server.name).toSorted();
     expect(names).toEqual(['fromHome', 'fromProject', 'overrideMe']);
 
     const merged = Object.fromEntries(servers.map((server) => [server.name, server]));
