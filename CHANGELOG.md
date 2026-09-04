@@ -2,6 +2,10 @@
 
 ## [0.13.9] - Unreleased
 
+### Reliability
+
+- Remove temporary environment overrides when a later value fails validation or resolution, preventing failed setup from affecting subsequent MCP connections. (PR #342, thanks @oodadoudou)
+
 ### OAuth
 
 - Keep OAuth running when macOS `open` or Windows `rundll32` cannot start, so the printed authorization URL remains usable. (PR #341, thanks @SebTardif)
