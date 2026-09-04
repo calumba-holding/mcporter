@@ -2,6 +2,10 @@
 
 ## [0.13.9] - Unreleased
 
+### OAuth
+
+- Keep OAuth running when macOS `open` or Windows `rundll32` cannot start, so the printed authorization URL remains usable. (PR #341, thanks @SebTardif)
+
 ### Maintenance
 
 - Refresh schema validation, query parsing, and development tools, including Zod's default-factory cycle-walk fix and bounded `tsx` transform caching, while preserving Node 24 support and the 48-hour dependency release-age policy.
