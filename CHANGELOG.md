@@ -1,6 +1,8 @@
 # mcporter Changelog
 
-## [0.13.10] - Unreleased
+## [0.13.10] - 2026-09-05
+
+**Highlights:** Generated CLIs keep the intended server when a config is supplied, and daemon launch failures report the executable and OS error immediately.
 
 - Preserve explicit inline server definitions during CLI generation when `--config` is also supplied, so unrelated or same-name configured servers cannot replace the tool-discovery target. (PR #350)
 - Report detached daemon launch failures with the executable and OS error instead of crashing the parent CLI or waiting for a readiness timeout. (PRs #347 and #351, thanks @SebTardif)
