@@ -128,11 +128,14 @@ export async function fetchTools(
   rootDir?: string
 ): Promise<{ tools: ServerToolInfo[]; derivedDescription?: string }> {
   // Reuse the runtime helper so bundle builds and CLI generation share the same discovery path.
-  const runtime = await createRuntime({
+  const base = await createRuntime({
     configPath,
     rootDir,
     servers: configPath ? undefined : [definition],
   });
+  const { createGeneratedKeepAliveRuntime } = await import('../../generated-daemon-runtime.js');
+  const context = await createGeneratedKeepAliveRuntime(base, definition);
+  const runtime = context.runtime;
   try {
     const tools = await runtime.listTools(serverName, { includeSchema: true });
     const derivedDescription = definition.description
@@ -140,12 +143,16 @@ export async function fetchTools(
       : await deriveDefinitionDescription(runtime, serverName);
     return { tools, derivedDescription };
   } finally {
-    await runtime.close(serverName).catch(() => {});
+    await context.close(serverName);
   }
 }
 
 async function deriveDefinitionDescription(runtime: Runtime, serverName: string): Promise<string | undefined> {
   try {
+    if (runtime.getServerMetadata) {
+      const { instructions, serverInfo } = await runtime.getServerMetadata(serverName);
+      return pickDescription(instructions, serverInfo);
+    }
     const context = await runtime.connect(serverName);
     const instructions =
       typeof context.client.getInstructions === 'function' ? context.client.getInstructions() : undefined;
