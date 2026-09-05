@@ -1,5 +1,7 @@
 # mcporter Changelog
 
+## [0.13.10] - Unreleased
+
 ## [0.13.9] - 2026-09-05
 
 **Highlight:** One daemon per OS user now serves every configuration. Ordinary CLI invocations and generated CLIs reuse the same retained MCP connections and a single canonical Chrome owner instead of racing competing per-config hosts. The new protocol requires a one-time `mcporter daemon migrate` after upgrading all clients.
